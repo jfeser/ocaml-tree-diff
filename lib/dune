@@ -1,6 +1,5 @@
 (library
-    (name lib)
-    (libraries core sexplib)
-    (preprocess (pps ppx_jane))
-    )
-
+ (public_name tree_diff)
+ (libraries core sexplib)
+ (preprocess
+  (pps ppx_jane)))

@@ -1,5 +1,6 @@
 (executable
-    (name bench_test)
-     (libraries lib utils core core_bench sexplib jsondiff minicli)
-    (preprocess (pps ppx_jane ))
-    )
+ (modes byte exe)
+ (name bench_test)
+ (libraries lib utils core core_bench sexplib jsondiff minicli)
+ (preprocess
+  (pps ppx_jane)))
