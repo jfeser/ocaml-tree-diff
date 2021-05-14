@@ -21,20 +21,19 @@ let lr_keyroots (Branch ((i, _), _) as tree) =
 let postorder_lookup (Branch((_,v),_) as t : 'a pi_tree) = 
   let t_size = Tree.size(t) in
   let arr = Array.create ~len:(t_size + 1) v in
-  let _ = Tree.fold t ~f:(fun (i,v) _ -> Array.set arr i v) in
+  let _x = Tree.fold t ~f:(fun (i,v) _ -> Array.set arr i v) in
   fun i -> Array.get arr i
 
 let leaf_lookup (t : 'a pi_tree) = 
   let t_size = Tree.size(t) in
   let arr = Array.create ~len:(t_size + 1) 0 in
-  let _ = Tree.fold t ~f:(fun (i,_) fcs -> match fcs with
+  let _x = Tree.fold t ~f:(fun (i,_) fcs -> match fcs with
     | [] -> Array.set arr i i; i
     | c::_ -> Array.set arr i c; c
   ) in
   fun i -> Array.get arr i
 
 let zs_tree_dist0 t1 t2 ~eq = 
-  printf "ZS Main, |T1| = %d, |T2| = %d \n" (Tree.size(t1)) (Tree.size(t2)); 
   let (Branch((tt1,_),_) as pt1), (Branch((tt2,_),_) as pt2) = Tree.convert_to_postorder t1, Tree.convert_to_postorder t2 in
   let lookup1, lookup2 = postorder_lookup pt1, postorder_lookup pt2 in
   let l1, l2 = leaf_lookup pt1, leaf_lookup pt2 in
@@ -95,7 +94,6 @@ let zs_tree_dist0 t1 t2 ~eq =
   (d_get (tt1, tt2))
 
 let zs_tree_dist1 t1 t2 ~eq = 
-  printf "ZS Main, |T1| = %d, |T2| = %d \n" (Tree.size(t1)) (Tree.size(t2)); 
   let (Branch((tt1,_),_) as pt1), (Branch((tt2,_),_) as pt2) = Tree.convert_to_postorder t1, Tree.convert_to_postorder t2 in
   let lookup1, lookup2 = postorder_lookup pt1, postorder_lookup pt2 in
   let l1, l2 = leaf_lookup pt1, leaf_lookup pt2 in
@@ -159,7 +157,6 @@ let zs_tree_dist1 t1 t2 ~eq =
   d_get (tt1, tt2)
 
 let zs_tree_dist_and_map1 t1 t2 ~eq = 
-  printf "ZS Main, |T1| = %d, |T2| = %d \n" (Tree.size(t1)) (Tree.size(t2)); 
   let cmin (i,vi) (j,vj) = if i < j then (i,vi) else (j,vj) in 
   let (Branch((tt1,_),_) as pt1), (Branch((tt2,_),_) as pt2) = Tree.convert_to_postorder t1, Tree.convert_to_postorder t2 in
   let lookup1, lookup2 = postorder_lookup pt1, postorder_lookup pt2 in
@@ -211,7 +208,7 @@ let zs_tree_dist_and_map1 t1 t2 ~eq =
             (cf + ct, mt @ mf)
           )
           in
-          fd_set (i,j) (cmin o1 @@ min o2 o3 )
+          fd_set (i,j) (cmin o1 @@ cmin o2 o3 )
       done
     done;
   in
@@ -224,7 +221,6 @@ let zs_tree_dist_and_map1 t1 t2 ~eq =
   (d_get (tt1, tt2))
 
 let zs_tree_dist_and_map t1 t2 ~eq = 
-  printf "ZS Main, |T1| = %d, |T2| = %d \n" (Tree.size(t1)) (Tree.size(t2)); 
   let (Branch((tt1,_),_) as pt1), (Branch((tt2,_),_) as pt2) = Tree.convert_to_postorder t1, Tree.convert_to_postorder t2 in
   let lookup1, lookup2 = postorder_lookup pt1, postorder_lookup pt2 in
   let l1, l2 = leaf_lookup pt1, leaf_lookup pt2 in
